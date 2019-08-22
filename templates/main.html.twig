@@ -1,0 +1,31 @@
+<div class="sidebar sidebar-main sidebar-default">
+    <div class="sidebar-content">
+        <!-- User menu -->
+        <div class="sidebar-user-material">
+            <div class="category-content">
+                <div class="sidebar-user-material-content">
+                    <a href="{{ path('index') }}"><img src="{{ asset('assets/images/placeholder.png') }}" style="height: 215px" class="img-circle img-responsive" alt=""></a>
+                </div>
+
+                <div class="sidebar-user-material-menu">
+                <a href="#user-nav" data-toggle="collapse"><span>{{ app.user ? app.user.nomprenom|title : "المطعم الجامعي بقبلي" }}</span> <i class="caret"></i></a>
+                </div>
+            </div>
+
+            <div class="navigation-wrapper collapse" id="user-nav">
+                <ul class="navigation">
+                    {#<li><a href="#"><i class="icon-user-plus"></i> <span>My profile</span></a></li>
+                    <li><a href="#"><i class="icon-coins"></i> <span>My balance</span></a></li>
+                    <li><a href="#"><i class="icon-comment-discussion"></i> <span><span class="badge bg-teal-400 pull-right">58</span> Messages</span></a></li>
+                    <li class="divider"></li>#}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li><a id="change-pwd" data-toggle="modal" data-target="#modal_default" href="javascript:void(0)"><i class="icon-key"></i> {{ "Changer PWD"|trans }}</a></li>
+                    {% endif %}
+                    {#<li><a href="{{ path('fos_user_security_logout') }}"><i class="icon-switch2"></i> <span>{{ "Déconnexion"|trans }}</span></a></li>#}
+                </ul>
+            </div>
+        </div>
+        <!-- /user menu -->
+        {% include "menu.html.twig" %}
+    </div>
+</div>

@@ -1,0 +1,11 @@
+index_controllers:
+    resource: ../../src/Index/Controller/
+    type: annotation
+
+gestion_plat_controllers:
+    resource: ../../src/GestionPlat/Controller/
+    type: annotation
+
+référentiel_controllers:
+    resource: ../../src/Referentiel/Controller/
+    type: annotation

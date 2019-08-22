@@ -1,0 +1,175 @@
+{% extends "base.html.twig" %}
+{% import "form.html.twig" as formulaire %}
+
+{% block title %}{{ "    المواد "|trans }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/formValidation.min.css') }}" type="text/css">
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <!-- 2 columns form -->
+        <!-- 2 columns form -->
+        {{ form_start(form) }}
+        <div class="panel panel-flat">
+            <div class="panel-heading">
+                <h1 class="panel-title text-center">{{ " المواد الموجودة "|trans }}</h1>
+                <div class="heading-elements">
+                    <ul class="icons-list">
+                        <li><a data-action="collapse"></a></li>
+                        <li><a data-action="reload"></a></li>
+                        <li><a data-action="close"></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <fieldset>
+                            <legend class="text-semibold"><i
+                                        class="icon-{{ form.vars.value.id == null ? "plus2" :"pencil7" }} position-left"></i> {{ form.vars.value.id == null ? "اضافة مادة جديدة"|trans :"تغيير"|trans }}
+                            </legend>
+                            <div class="row">
+                                {{ formulaire.input("col-md-6","اسم المادة"|trans,form.nom,true) }}
+                                {{ formulaire.input("col-md-6","الشفرة"|trans,form.code,true) }}
+                                {{ formulaire.checkbox("col-md-6","الوضعية"|trans,form.etat,true) }}
+                                {{ formulaire.input("col-md-6","ملاحظة"|trans,form.remarque,true) }}
+                                {{ formulaire.input("col-md-6","الوحدة"|trans,form.unite,true) }} 
+                                {{ formulaire.input("col-md-6","الصنف"|trans,form.categorie,true) }}
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <button type="submit" class="btn btn-primary">{{ "حفظ البيانات"|trans }} <i
+                                class="icon-arrow-left13 position-right"></i></button>
+                </div>
+            </div>
+        </div>
+        {{ form_widget(form._token) }}
+        {{ form_end(form, {'render_rest': false}) }}
+        <!-- /2 columns form -->
+        <!-- /2 columns form -->
+    </div>
+
+    <div class="row">
+        <!-- 2 columns form -->
+        <!-- 2 columns form -->
+        <div class="panel panel-flat">
+            <div class="panel-heading">
+                <h1 class="panel-title text-center">{{ "قائمة المواد الموجودة"|trans }}</h1>
+                <div class="heading-elements">
+                    <ul class="icons-list">
+                        <li><a data-action="collapse"></a></li>
+                        <li><a data-action="reload"></a></li>
+                        <li><a data-action="close"></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <table class="table table-responsive datatable-search-button-print-columns">
+                    <thead>
+                    <tr>
+                        <th>المعرف الوحيد</th>
+                        <th>{{ "اسم المادة"|trans }}</th>
+                        <th>{{ "الشفرة"|trans }}</th>
+                        <th>{{ " الوضعية"|trans }}</th>
+                         <th>{{ "ملاحظة"|trans }}</th>
+                         <th>{{ "الوحدة"|trans }}</th>
+                         <th>{{ "الصنف"|trans }}</th>
+                        <th class="text-center col-action">{{ "العمليات"|trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for article in articles %}
+                        <tr id="tr{{ article.id }}">
+                            <td>{{ article.id }}</td>
+                            <td>{{ article.nom }}</td>
+                             <td>{{ article.code }}</td>
+                            <td>{{ article.etat }}</td>
+                            <td>{{ article.remarque }}</td>
+                            <td>{{ article.unite }}</td> 
+                            <td>{{ article.categorie }}</td>
+                            <td id="td{{ article.id }}" class="text-center">
+                                <ul class="icons-list">
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                            <i class="icon-menu9"></i>
+                                        </a>
+
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            {{ formulaire.btnEdit(path('modifier-article',{'id':article.id})) }}
+                                            {{ formulaire.btnDelete(article.id) }}
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td>#</td>
+                        <td>{{ "Nom"|trans }}</td>
+                        <td></td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('assets/js/formValidation/formValidation.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/formValidation/framework/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/formValidation/language/ar.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('assets/js/plugins/tables/datatables/extensions/buttons.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('assets/js/plugins/tables/datatables/extensions/select.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/pages/datatables_extension_buttons_print.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/forms/selects/select2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/pages/datatables_api.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('assets/js/eModal.min.js') }}"></script>
+    <script>
+        //============================== Validation de formulaire ==============
+        $('form[name="categorie"]')
+            .formValidation({
+                framework: 'bootstrap',
+                excluded: [':disabled'],
+                locale: 'ar',
+                fields: {}
+            });
+
+        $('.delete-item').click(function () {
+            var id = $(this).data('item');
+            var $td = $('#td' + id);
+            var $tr = $('#tr' + id);
+            eModal.confirm(optionsConfSupp).then(function () {
+                $td.html('<i class="icon-spinner2 spinner"></i>');
+                $.ajax({
+                    url: "{{ path('delete-article',{'id':'_id'}) }}".replace('_id', id),
+                    type: "POST",
+                    cache: false,
+                    success: function () {
+                        $tr.hide("slow");
+                        toastr['success']('{{ "غملية الحذف تمت ينجاح"|trans }}', '{{ "حذف"|trans }}');
+                    },
+                    error: function (jqXHR) {
+                        //alert(jqXHR.responseText);
+                        $td.html('<span style="color: red">Erreur</span>');
+                    }
+                });
+            });
+        });
+
+
+    </script>
+{% endblock %}

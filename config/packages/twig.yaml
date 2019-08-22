@@ -1,0 +1,8 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    paths:
+        '%kernel.project_dir%/src/Index/templates': Index
+        '%kernel.project_dir%/src/GestionPlat/templates': GestionPlat
+        '%kernel.project_dir%/src/Referentiel/templates': Referentiel
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'

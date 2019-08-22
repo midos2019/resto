@@ -1,0 +1,187 @@
+{% extends "base.html.twig" %}
+{% import "form.html.twig" as formulaire %}
+
+{% block title %}{{ "   المؤسسة "|trans }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/formValidation.min.css') }}" type="text/css">
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <!-- 2 columns form -->
+        <!-- 2 columns form -->
+        {{ form_start(form) }}
+        <div class="panel panel-flat">
+            <div class="panel-heading">
+                <h1 class="panel-title text-center">{{ "  ادخال بيانات المؤسسة  "|trans }}</h1>
+                <div class="heading-elements">
+                    <ul class="icons-list">
+                        <li><a data-action="collapse"></a></li>
+                        <li><a data-action="reload"></a></li>
+                        <li><a data-action="close"></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <fieldset>
+                            <legend class="text-semibold"><i
+                                        class="icon-{{ form.vars.value.id == null ? "plus2" :"pencil7" }} position-left"></i> {{ form.vars.value.id == null ? "اضافة مؤسسة جديدة"|trans :" تغيير"|trans }}
+                            </legend>
+                            <div class="row">
+                                {{ formulaire.input("col-md-'6'","اسم الوزارة"|trans,form.nomMinistere,true) }}
+                                {# {{ formulaire.input("col-md-'6'","الادارة العامة"|trans,form.activite,true) }} #}
+                                 {{ formulaire.input("col-md-6","  اسم المؤسسة"|trans,form.nom,true) }}
+                                {{ formulaire.input("col-md-6","المدير"|trans,form.nomDir,true) }}
+                                {# {{ formulaire.input("col-md-6","المقتصد"|trans,form.ville,true) }} #}
+                                {{ formulaire.input("col-md-6"," حافظ المغازة"|trans,form.magasinier,true) }}
+                                {{ formulaire.input("col-md-6","وكيل المقابيض"|trans,form.econome,true) }}
+                                {{ formulaire.input("col-md-6","العنوان"|trans,form.adresse,true) }}
+                                {{ formulaire.input("col-md-6","المدينة"|trans,form.ville,true) }}
+                                {{ formulaire.input("col-md-6","الهاتف"|trans,form.tel,true) }}
+                                {{ formulaire.input("col-md-6","الفاكس"|trans,form.fax,true) }}
+                                {{ formulaire.input("col-md-6","السنة الدراسية"|trans,form.anneeScol,true) }}
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <button type="submit" class="btn btn-primary">{{ "حفظ البيانات"|trans }} <i
+                                class="icon-arrow-left13 position-right"></i></button>
+                </div>
+            </div>
+        </div>
+        {{ form_widget(form._token) }}
+        {{ form_end(form, {'render_rest': false}) }}
+        <!-- /2 columns form -->
+        <!-- /2 columns form -->
+    </div>
+
+    <div class="row">
+        <!-- 2 columns form -->
+        <!-- 2 columns form -->
+        <div class="panel panel-flat">
+            <div class="panel-heading">
+                <h1 class="panel-title text-center">{{ " بيانات المؤسسة"|trans }}</h1>
+                <div class="heading-elements">
+                    <ul class="icons-list">
+                        <li><a data-action="collapse"></a></li>
+                        <li><a data-action="reload"></a></li>
+                        <li><a data-action="close"></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <table class="table table-responsive datatable-search-button-print-columns">
+                    <thead>
+                    <tr>
+                        <th>المعرف الوحيد</th>
+                        <th>{{ " اسم الوزارة"|trans }}</th>
+                        <th>{{ " اسم المؤسسة"|trans }}</th>
+                        <th>{{ " المدير"|trans }}</th>
+                        <th>{{ " حافظ المغازة"|trans }}</th>
+                        <th>{{ " وكيل المقابيض"|trans }}</th>
+                        <th>{{ " العنوان"|trans }}</th>
+                         <th>{{ " المدينة"|trans }}</th>
+                        <th>{{ " الهاتف"|trans }}</th>
+                        <th>{{ " الفاكس"|trans }}</th>
+                        <th>{{ " السنة الدراسية"|trans }}</th>
+
+                        <th class="text-center col-action">{{ "العمليات"|trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for etablissement in etablissements %}
+                        <tr id="tr{{ etablissement.id }}">
+                            <td>{{ etablissement.id }}</td>
+                            <td>{{ etablissement.nom }}</td>
+                            <td>{{ etablissement.nomMinistere }}</td>
+                            <td>{{ etablissement.nomDir }}</td>
+                            <td>{{ etablissement.econome }}</td>
+                            <td>{{ etablissement.magasinier }}</td>
+                            <td>{{ etablissement.adresse }}</td>
+                            <td>{{ etablissement.ville }}</td>
+                            <td>{{ etablissement.tel }}</td>
+                            <td>{{ etablissement.fax }}</td>
+                             <td>{{ etablissement.anneeScol }}</td>
+                            <td id="td{{ etablissement.id }}" class="text-center">
+                                <ul class="icons-list">
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                            <i class="icon-menu9"></i>
+                                        </a>
+
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            {{ formulaire.btnEdit(path('modifier-etablissement',{'id':etablissement.id})) }}
+                                            {{ formulaire.btnDelete(etablissement.id) }}
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr> 
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td>#</td>
+                        <td>{{ "Nom"|trans }}</td>
+                        <td></td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('assets/js/formValidation/formValidation.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/formValidation/framework/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/formValidation/language/ar.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('assets/js/plugins/tables/datatables/extensions/buttons.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('assets/js/plugins/tables/datatables/extensions/select.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/pages/datatables_extension_buttons_print.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/forms/selects/select2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/pages/datatables_api.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('assets/js/eModal.min.js') }}"></script>
+    <script>
+        //============================== Validation de formulaire ==============
+        $('form[name="categorie"]')
+            .formValidation({
+                framework: 'bootstrap',
+                excluded: [':disabled'],
+                locale: 'ar',
+                fields: {}
+            });
+        $('.delete-item').click(function () {
+            var id = $(this).data('item');
+            var $td = $('#td' + id);
+            var $tr = $('#tr' + id);
+            eModal.confirm(optionsConfSupp).then(function () {
+                $td.html('<i class="icon-spinner2 spinner"></i>');
+                $.ajax({
+                    url: "{{ path('delete-etablissement',{'id':'_id'}) }}".replace('_id', id),
+                    type: "POST",
+                    cache: false,
+                    success: function () {
+                        $tr.hide("slow");
+                        toastr['success']('{{ "عملية الحذف تمت ينجاح"|trans }}', '{{ "حذف"|trans }}');
+                    },
+                    error: function (jqXHR) {
+                        //alert(jqXHR.responseText);
+                        $td.html('<span style="color: red">خطأ</span>');
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
