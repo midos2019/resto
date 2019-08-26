@@ -41,6 +41,8 @@
                     </div>
                 </div>
                 <div class="text-right">
+                    <button type="submit" class="btn btn-primary">{{ "اضافة"|trans }} <i
+                                class="icon-plus position-right"></i></button>
                     <button type="submit" class="btn btn-primary">{{ "حفظ البيانات"|trans }} <i
                                 class="icon-arrow-left13 position-right"></i></button>
                 </div>
@@ -57,7 +59,7 @@
         <!-- 2 columns form -->
         <div class="panel panel-flat">
             <div class="panel-heading">
-                <h1 class="panel-title text-center">{{ "مشتريات اليوم"|trans }}</h1>
+                <h1 class="panel-title text-center">{{ "قائمة المشتريات "|trans }}</h1>
                 <div class="heading-elements">
                     <ul class="icons-list">
                         <li><a data-action="collapse"></a></li>
@@ -72,9 +74,14 @@
                     <thead>
                     <tr>
                         <th>المعرف الوحيد</th>
+                        <th>{{ " التاريخ"|trans }}</th>
+                        <th>{{ " المزود"|trans }}</th>
+                        <th>{{ " الموظف"|trans }}</th>
+                        <th>{{ " المواد"|trans }}</th>
                         <th>{{ " الكمية"|trans }}</th>
-                         <th>{{ " الثمن الفردي"|trans }}</th>
-                          <th>{{ "  المخزون"|trans }}</th>
+                        <th>{{ " الثمن الفردي"|trans }}</th>
+                        <th>{{ " الثمن الجملي"|trans }}</th>
+                        <th>{{ "  المخزون"|trans }}</th>
                         <th class="text-center col-action">{{ "العمليات"|trans }}</th>
                     </tr>
                     </thead>
@@ -100,7 +107,7 @@
                                 </ul>
                             </td>
                         </tr>
-                    {% endfor %} #}
+                    {% endfor %}#}
                     </tbody>
                     <tfoot>
                     <tr>
